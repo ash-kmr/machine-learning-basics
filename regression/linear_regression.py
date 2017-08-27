@@ -1,3 +1,11 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Sat Aug 26 15:34:50 2017
+
+@author: ashish
+"""
+
 #simple linear regression
 
 import numpy as np
@@ -55,3 +63,19 @@ regressor.fit(X_train_new, Y_train_new)
 
 Y_pred_new = regressor.predict(X_test_new)
 
+# bakward elimination regression
+
+import statsmodels.formula.api as sm
+X_new = np.append(arr = np.ones((50,1)).astype(int), values = X_new , axis = 1)
+X_optimal = X_new[:,[0,1,2,3,4,5]]
+regressorfromols = sm.OLS(endog = Y_new, exog = X_optimal).fit() # parameters are dependent and independent variable
+regressorfromols.summary() #show the summary including p-values
+X_optimal = X_optimal[:,[0,2,3,4]]
+regressorfromols = sm.OLS(endog = Y_new, exog = X_optimal).fit()
+regressorfromols.summary()
+X_optimal = X_optimal[:,[0,1,3]]
+regressorfromols = sm.OLS(endog = Y_new, exog = X_optimal).fit()
+regressorfromols.summary()
+X_optimal = X_optimal[:,[0,1]]
+regressorfromols = sm.OLS(endog = Y_new, exog = X_optimal).fit()
+regressorfromols.summary()
